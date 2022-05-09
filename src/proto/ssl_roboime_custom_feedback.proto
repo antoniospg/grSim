@@ -1,0 +1,28 @@
+syntax = "proto2";
+option go_package = "github.com/RoboCup-SSL/ssl-simulation-protocol/pkg/sim";
+
+import "ssl_simulation_error.proto";
+import "google/protobuf/any.proto";
+
+// Feedback from a robot
+message RoboImeRobotFeedback {
+    // SAME MESSAGE IMPLEMENTED IN THE REAL ROBOT
+    required uint32 id = 1;
+    required uint32 status = 2;
+    required float battery = 3;
+    required float encoder1 = 4;
+    required float encoder2 = 5;
+    required float encoder3 = 6;
+    required float encoder4 = 7;
+    //DO NOT DELETE
+    // Custom robot feedback for specific simulators (the protobuf files are managed by the simulators)
+    optional google.protobuf.Any custom = 8;
+}
+
+// Response to RobotControl from the simulator to the connected client
+message RoboImeRobotControlResponse {
+    // List of errors, like using unsupported features
+    repeated SimulatorError errors = 1;
+    // Feedback of the robots
+    repeated RoboImeRobotFeedback feedback = 2;
+}

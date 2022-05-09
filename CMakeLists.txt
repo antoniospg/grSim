@@ -126,6 +126,7 @@ protobuf_generate_cpp(PROTO_CPP PROTO_H
     src/proto/ssl_vision_detection.proto
     src/proto/ssl_vision_geometry.proto
     src/proto/ssl_vision_wrapper.proto
+    src/proto/ssl_roboime_custom_feedback.proto
 )
 
 qt5_add_resources(RESOURCES
