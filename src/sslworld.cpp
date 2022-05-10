@@ -698,7 +698,7 @@ void SSLWorld::blueControlSocketReady() {
         }
         robotControl.ParseFromArray(datagram.data().data(), datagram.data().size());
 
-        RobotControlResponse robotControlResponse;
+        RoboImeRobotControlResponse robotControlResponse;
         processRobotControl(robotControl, robotControlResponse, BLUE);
 
         QByteArray buffer(robotControlResponse.ByteSize(), 0);
@@ -716,7 +716,7 @@ void SSLWorld::yellowControlSocketReady() {
         }
         robotControl.ParseFromArray(datagram.data().data(), datagram.data().size());
 
-        RobotControlResponse robotControlResponse;
+        RoboImeRobotControlResponse robotControlResponse;
         processRobotControl(robotControl, robotControlResponse, YELLOW);
         
         QByteArray buffer(robotControlResponse.ByteSize(), 0);
@@ -868,7 +868,7 @@ void SSLWorld::processTeleportBall(SimulatorResponse &simulatorResponse, const T
     }
 }
 
-void SSLWorld::processRobotControl(const RobotControl &robotControl, RobotControlResponse &robotControlResponse, Team team) {
+void SSLWorld::processRobotControl(const RobotControl &robotControl, RoboImeRobotControlResponse &robotControlResponse, Team team) {
     for (const auto &robotCommand : robotControl.robot_commands()) {
         int id = robotIndex(robotCommand.id(), team == YELLOW ? 1 : 0);
         if (id < 0) {
@@ -899,11 +899,17 @@ void SSLWorld::processRobotControl(const RobotControl &robotControl, RobotContro
         
         auto feedback = robotControlResponse.add_feedback();
         feedback->set_id(robotCommand.id());
-        feedback->set_dribbler_ball_contact(robot->kicker->isTouchingBall());
+        //feedback->set_dribbler_ball_contact(robot->kicker->isTouchingBall());
+        feedback->set_status(2);
+        feedback->set_battery(3.0f);
+        feedback->set_encoder1(4.0f);
+        feedback->set_encoder2(5.0f);
+        feedback->set_encoder3(6.0f);
+        feedback->set_encoder4(7.0f);
     }
 }
 
-void SSLWorld::processMoveCommand(RobotControlResponse &robotControlResponse, const RobotMoveCommand &moveCommand,
+void SSLWorld::processMoveCommand(RoboImeRobotControlResponse &robotControlResponse, const RobotMoveCommand &moveCommand,
                                   Robot *robot) {
     if (moveCommand.has_wheel_velocity()) {
         auto &wheelVel = moveCommand.wheel_velocity();
@@ -921,9 +927,9 @@ void SSLWorld::processMoveCommand(RobotControlResponse &robotControlResponse, co
         dReal vy = (vel.y() * cos(orientation)) + (vel.x() * sin(orientation));
         robot->setSpeed(vx, vy, vel.angular());
     }  else {
-        SimulatorError *pError = robotControlResponse.add_errors();
-        pError->set_code("GRSIM_UNSUPPORTED_MOVE_COMMAND");
-        pError->set_message("Unsupported move command");
+        //SimulatorError *pError = robotControlResponse.add_errors();
+        //pError->set_code("GRSIM_UNSUPPORTED_MOVE_COMMAND");
+        /pError->set_message("Unsupported move command");
     }
 }
 

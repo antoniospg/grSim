@@ -44,6 +44,7 @@ Copyright (C) 2011, Parsian Robotic Center (eew.aut.ac.ir/~parsian/grsim)
 #include "ssl_simulation_config.pb.h"
 #include "ssl_simulation_control.pb.h"
 #include "ssl_simulation_robot_control.pb.h"
+#include "ssl_roboime_custom_feedback.pb.h"
 #include "ssl_simulation_robot_feedback.pb.h"
 
 #define WALL_COUNT 10
@@ -69,10 +70,10 @@ private:
     bool lastInfraredState[TEAM_COUNT][MAX_ROBOT_COUNT]{};
     KickStatus lastKickState[TEAM_COUNT][MAX_ROBOT_COUNT]{};
     void processSimControl(const SimulatorCommand &simulatorCommand, SimulatorResponse &simulatorResponse);
-    void processRobotControl(const RobotControl &robotControl, RobotControlResponse &robotControlResponse, Team team);
+    void processRobotControl(const RobotControl &robotControl, RoboImeRobotControlResponse &robotControlResponse, Team team);
     void processRobotSpec(const RobotSpecs &robotSpec) const;
     static void processRobotLimits(const RobotSpecs &robotSpec, RobotSettings *settings);
-    static void processMoveCommand(RobotControlResponse &robotControlResponse, const RobotMoveCommand &robotCommand,
+    static void processMoveCommand(RoboImeRobotControlResponse &robotControlResponse, const RobotMoveCommand &robotCommand,
                             Robot *robot) ;
     void processTeleportBall(SimulatorResponse &simulatorResponse, const TeleportBall &teleBall) const;
     static void processTeleportRobot(const TeleportRobot &teleBot, Robot *robot);
