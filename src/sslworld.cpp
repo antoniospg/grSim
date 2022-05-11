@@ -902,10 +902,10 @@ void SSLWorld::processRobotControl(const RobotControl &robotControl, RoboImeRobo
         //feedback->set_dribbler_ball_contact(robot->kicker->isTouchingBall());
         feedback->set_status(2);
         feedback->set_battery(3.0f);
-        feedback->set_encoder1(4.0f);
-        feedback->set_encoder2(5.0f);
-        feedback->set_encoder3(6.0f);
-        feedback->set_encoder4(7.0f);
+        feedback->set_encoder1(robot->wheels[0]->speed);
+        feedback->set_encoder2(robot->wheels[1]->speed);
+        feedback->set_encoder3(robot->wheels[2]->speed);
+        feedback->set_encoder4(robot->wheels[3]->speed);
     }
 }
 
@@ -929,7 +929,7 @@ void SSLWorld::processMoveCommand(RoboImeRobotControlResponse &robotControlRespo
     }  else {
         //SimulatorError *pError = robotControlResponse.add_errors();
         //pError->set_code("GRSIM_UNSUPPORTED_MOVE_COMMAND");
-        /pError->set_message("Unsupported move command");
+        //pError->set_message("Unsupported move command");
     }
 }
 
