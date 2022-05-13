@@ -900,7 +900,7 @@ void SSLWorld::processRobotControl(const RobotControl &robotControl, RoboImeRobo
         auto feedback = robotControlResponse.add_feedback();
         feedback->set_id(robotCommand.id());
         //feedback->set_dribbler_ball_contact(robot->kicker->isTouchingBall());
-        feedback->set_status(2);
+        feedback->set_status(robot->kicker->isTouchingBall());
         feedback->set_battery(3.0f);
         feedback->set_encoder1(robot->wheels[0]->speed);
         feedback->set_encoder2(robot->wheels[1]->speed);
